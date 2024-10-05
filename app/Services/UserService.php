@@ -13,7 +13,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserService
 {
- /**
+    /**
      * Retrieve all users with pagination.
      * 
      * @throws \Exception
@@ -57,7 +57,6 @@ class UserService
     {
         try {
             return User::findOrFail($id);
-
         } catch (ModelNotFoundException $e) {
             throw new \Exception('User not found: ' . $e->getMessage());
         } catch (\Exception $e) {
@@ -106,50 +105,6 @@ class UserService
             throw new \Exception('User not found: ' . $e->getMessage());
         } catch (\Exception $e) {
             Log::error('Failed to delete user: ' . $e->getMessage());
-            throw new \Exception('An error occurred on the server.');
-        }
-    }
-    
-    /**
-     * Assign a role to a user.
-     * 
-     * @param string $userId
-     * @param string $roleName
-     * @throws \Exception
-     * @return void
-     */
-    public function assignRoleToUser(string $userId, string $roleName)
-    {
-        try {
-            $user = User::findOrFail($userId);
-            $user->assignRole($roleName);
-
-        } catch (ModelNotFoundException $e) {
-            throw new \Exception('User not found: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            Log::error('Failed to assign role: ' . $e->getMessage());
-            throw new \Exception('An error occurred on the server.');
-        }
-    }
-
-    /**
-     * Remove a role from a user.
-     * 
-     * @param string $userId
-     * @param string $roleName
-     * @throws \Exception
-     * @return void
-     */
-    public function removeRoleFromUser(string $userId, string $roleName)
-    {
-        try {
-            $user = User::findOrFail($userId);
-            $user->removeRole($roleName);
-
-        } catch (ModelNotFoundException $e) {
-            throw new \Exception('User not found: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            Log::error('Failed to remove role: ' . $e->getMessage());
             throw new \Exception('An error occurred on the server.');
         }
     }
