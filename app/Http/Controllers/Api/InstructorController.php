@@ -95,20 +95,20 @@ class InstructorController extends Controller
     }
 
     /**
-     * List all students of a course.
+     * List all students of an instruuctore.
      */
     public function listStudents(string $id)
     {
         try {
             $students = $this->instructorService->listStudentsOfInstructor($id);
-            return ApiResponseService::success(StudentResource::collection($students), 'Students retrieved successfully', 200);
+            return ApiResponseService::success($students, 'Students retrieved successfully', 200);
         } catch (\Exception $e) {
             return ApiResponseService::error(null, 'An error occurred on the server.', 500);
         }
     }
 
     /**
-     * List all instructors of a course.
+     * List all courses of an instruuctore.
      */
     public function listCourses(string $id)
     {
@@ -121,7 +121,7 @@ class InstructorController extends Controller
     }
 
     /**
-     * Assign instructors to a course.
+     * Assign courses to an instructor.
      */
     public function assignCourses(Request $request, string $id)
     {
@@ -131,85 +131,10 @@ class InstructorController extends Controller
         ]);
 
         try {
-            $course = $this->instructorService->assignCoursesToInstructors($id, $validated['courses']);
-            return ApiResponseService::success(new CourseResource($course), 'Courses assigned successfully', 200);
+            $instructor = $this->instructorService->assignCoursesToInstructors($id, $validated['courses']);
+            return ApiResponseService::success(new InstructorResource($instructor), 'Courses assigned successfully', 200);
         } catch (\Exception $e) {
             return ApiResponseService::error(null, 'An error occurred on the server.', 500);
         }
     }
-
-    // public function showStudents($instructorId)
-    // {
-    //     $instructor = Instructor::findOrFail($instructorId);
-    //     $students = $instructor->students;
-
-    //     return response()->json([
-    //         'instructor' => $instructor->name,
-    //         'students' => $students,
-    //     ]);
-    // }
-
-    // public function showStudents($instructorId)
-    // {
-    //     $instructor = Instructor::findOrFail($instructorId);
-    //     $students = $instructor->students;
-    //     $response = [
-    //         'instructor' => $instructor->name,
-    //         'courses' => [],
-    //     ];
-
-    //     // Loop through each course
-    //     foreach ($instructor->courses as $course) {
-    //         $students = [];
-
-    //         // Loop through each student in the current course
-    //         foreach ($course->students as $student) {
-    //             $students[] = [
-    //                 'student_id' => $student->id,
-    //                 'student_name' => $student->name,
-    //             ];
-    //         }
-
-    //         // Add the course information along with students to the response
-    //         $response['courses'][] = [
-    //             'course' => $course->title,
-    //             'students' => $students,
-    //         ];
-    //     }
-
-    //     return response()->json($response);
-    // }
-
-    // public function showStudents($instructorId)
-    // {
-    //     // Find the instructor by ID
-    //     $instructor = Instructor::findOrFail($instructorId);
-
-    //     // Retrieve all courses associated with the instructor and eager load students
-    //     $courses = $instructor->courses()->with('students')->get(); 
-
-    //     // Prepare the response array
-    //     $response = [
-    //         'instructor' => $instructor->name,
-    //         'courses' => [],
-    //     ];
-
-    //     // Loop through each course and its students
-    //     foreach ($courses as $course) {
-    //         $response['courses'][] = [
-    //             'course' => $course->title, // Assuming there is a title attribute in the Course model
-    //             'students' => $course->students->map(function ($student) {
-    //                 return [
-    //                     'student_id' => $student->id,
-    //                     'student_name' => $student->name, // Assuming you have a name field in the Student model
-    //                     // Remove the laravel_through_key to exclude it from the response
-    //                 ];
-    //             }),
-    //         ];
-    //     }
-
-    //     return response()->json($response);
-    // }
-
-
 }
