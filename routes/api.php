@@ -51,6 +51,6 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('/students/{id}/courses', 'listCourses');
 
     // Register in courses
-    Route::post('/student/{id}/courses', 'registerInCourses');
+    Route::post('/students/{id}/courses', 'registerInCourses');
 });
 Route::apiResource('students', StudentController::class);
