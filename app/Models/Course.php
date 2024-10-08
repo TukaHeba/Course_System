@@ -35,7 +35,7 @@ class Course extends Model
      * 
      * @return string
      */
-    public function getDueDateAttribute($value)
+    public function getStartDateAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y H:i');
     }
@@ -46,9 +46,9 @@ class Course extends Model
      * @param string $value
      * @return void
      */
-    public function setDueDateAttribute($value)
+    public function setStartDateAttribute($value)
     {
-        $this->attributes['due_date'] = Carbon::createFromFormat('d-m-Y H:i', $value)->format('Y-m-d H:i:s');
+        $this->attributes['start_date'] = Carbon::createFromFormat('d-m-Y H:i', $value)->format('Y-m-d H:i:s');
     }
 
     /**
